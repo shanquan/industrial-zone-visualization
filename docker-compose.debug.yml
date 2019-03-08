@@ -1,0 +1,13 @@
+version: '2.1'
+
+services:
+  server:
+    image: server
+    build: .
+    environment:
+      NODE_ENV: development
+    ports:
+      - 8080:8080
+      - 1337:1337
+    ## set your startup file here
+    command: npm run dev

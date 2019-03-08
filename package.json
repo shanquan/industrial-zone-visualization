@@ -1,0 +1,16 @@
+{
+  "name": "industrial-zones",
+  "version": "0.1.0",
+  "private": true,
+  "main": "backend/app.js",
+  "scripts": {
+    "dev": "cd backend && npm run dev & cd ../frontend && npm run serve",
+    "install": "cd frontend && npm i && cd ../backend && npm i && cd ..",
+    "start": "cd frontend && npm run build && cd ../backend && npm run start"
+  },
+  "license": "MIT",
+  "author": "wangweili <wang.weili@byd.com>",
+  "engines": {
+    "node": "^8.12"
+  }
+}
