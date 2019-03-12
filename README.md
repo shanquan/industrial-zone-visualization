@@ -110,9 +110,10 @@ sails默认static路径为.tmp/public，上传图片url时需要将图片放入�
 }
 ```
 
-### docker 修改image中的配置文件
+### docker
 
 ```bash
+## 修改image中的配置文件，修复production环境下sails error
 docker build -t app:v0.1 .
 docker images
 # 运行容器，进入terminal
@@ -120,9 +121,10 @@ docker container run -it app:v0.1
 cd backend/config/env
 # 替换253至257行内容，建议先不用-i参数预览文件内容，确认无误后加-i参数保存文件
 sed -i '253,257c onlyAllowOrigins:['http://localhost']' production.js
-# 重新进入容器bash
+# 重新进入容器bash并运行npm start
 # docker ps
 # docker exec -it ${NAMES} /bin/bash
+# npm run start
 # 提交容器至镜像image
 docker ps
 docker commit ${CONTAINER ID} app:v0.1

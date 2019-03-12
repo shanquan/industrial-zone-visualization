@@ -117,6 +117,7 @@ export default {
       item.bgimg = '';
     },
     setBgImg(id,url){
+      cacheBg = null;
       let zones = [];
       this.$store.state.zones.forEach(el=>{
         if(el.id==id){
