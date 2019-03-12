@@ -130,9 +130,6 @@ lib-cov
 *.out
 *.pid
 
-#frontend
-/backend/assets
-
 # local env files
 .env.local
 .env.*.local

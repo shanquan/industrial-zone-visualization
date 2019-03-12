@@ -11,8 +11,8 @@ WORKDIR /app
 RUN npm install
 
 # Expose API port to the outside
-ENV PORT 80
-EXPOSE 80
+# ENV PORT 80
+# EXPOSE 80
 
 # Launch application
-CMD ["npm","start"]
+# CMD ["npm","start"]

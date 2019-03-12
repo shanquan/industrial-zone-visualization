@@ -96,7 +96,7 @@ This project could not have been made possible without the great work of [Julian
 
 sails model自动生成的API 与 前端路由重合，所以前端页面统一添加v前缀；（或者配置sails后端API统一增加path: api/, 但是目前只发现重写每个route的办法，不知道如何配置blueprint action自动增加访问路径前缀）
 
-sails默认static路径为.tmp/public，上传图片url时需要将图片放入其中，但是前端执行vue-cli-service build命令时会自动清空public目录或不清空，需要设置保留其中的upload文件夹
+sails默认static路径为.tmp/public，上传图片url时需要将图片放入其中，但是前端执行vue-cli-service build命令时会自动清空public目录或不清空，需要设置[保留其中的upload文件夹](#keep-resolve-directory-in-outputdir)
 
 `area`标签的href链接会触发页面自动刷新，sails后端路由需要针对前端路由页面增加跳转至index.html:
 
@@ -108,4 +108,26 @@ sails默认static路径为.tmp/public，上传图片url时需要将图片放入�
   skipAssets: true,
   skipRegex: /^\/api\/.*$/
 }
+```
+
+### docker 修改image中的配置文件
+
+```bash
+docker build -t app:v0.1 .
+docker images
+# 运行容器，进入terminal
+docker container run -it app:v0.1
+cd backend/config/env
+# 替换253至257行内容，建议先不用-i参数预览文件内容，确认无误后加-i参数保存文件
+sed -i '253,257c onlyAllowOrigins:['http://localhost']' production.js
+# 重新进入容器bash
+# docker ps
+# docker exec -it ${NAMES} /bin/bash
+# 提交容器至镜像image
+docker ps
+docker commit ${CONTAINER ID} app:v0.1
+# 运行镜像容器 or 使用docker扩展images下选中app:v0.1右键，选择run interactive
+docker run --rm -it -p 80:80/tcp app:v0.1
+# 开发模式：运行docker-compose.debug.yml
+docker-compose -f docker-compose.debug.yml up
 ```

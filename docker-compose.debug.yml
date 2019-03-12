@@ -1,13 +1,14 @@
-version: '2.1'
+version: '3'
 
 services:
-  server:
-    image: server
+  web:
     build: .
     environment:
       NODE_ENV: development
     ports:
       - 8080:8080
       - 1337:1337
+    volumes:
+     - ./upload:/backend/.tmp/public/upload
     ## set your startup file here
     command: npm run dev

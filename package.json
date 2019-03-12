@@ -4,7 +4,7 @@
   "private": true,
   "main": "backend/app.js",
   "scripts": {
-    "dev": "cd backend && npm run dev & cd ../frontend && npm run serve",
+    "dev": "cd backend && npm run dev & cd frontend && npm run serve",
     "install": "cd frontend && npm i && cd ../backend && npm i && cd ..",
     "start": "cd frontend && npm run build && cd ../backend && npm run start"
   },
