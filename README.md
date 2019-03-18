@@ -133,3 +133,9 @@ docker run --rm -it -p 80:80/tcp app:v0.1
 # 开发模式：运行docker-compose.debug.yml
 docker-compose -f docker-compose.debug.yml up
 ```
+
+### data generate
+```bash
+# 添加user
+curl -d "workid=12345&name=admin&type=0" http://localhost:1337/user
+```

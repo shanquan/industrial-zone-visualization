@@ -13,8 +13,6 @@ import {
   Submenu,
   MenuItem,
   MenuItemGroup,
-  Input,
-  InputNumber,
  } from 'element-ui'
 
 Vue.use(Button)
