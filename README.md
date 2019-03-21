@@ -22,9 +22,9 @@ $ cd frontend && npm install
 $ cd ../backend && npm install
 ```
 
-##### keep resolve directory in outputDir
+##### keep resolve directory `upload` in outputDir
 
-open ./frontend/node_modules/@vue/cli-service/lib/commands/build/index.js, edit & save as below from line 178:
+open ./frontend/node_modules/@vue/cli-service/lib/commands/build/index.js, edit & save as below from line 187:
 ```js
   if (args.clean) {
     if (fs.existsSync(targetDir)) {
@@ -38,6 +38,15 @@ open ./frontend/node_modules/@vue/cli-service/lib/commands/build/index.js, edit 
     }
     // await fs.remove(targetDir)
   }
+```
+or use command:
+```bash
+# preview edit
+cd frontend/node_modules/@vue/cli-service/lib/commands/build && sed '194c if(fs.existsSync(targetDir)){letfiles=[];files=fs.readdirSync(targetDir);files.forEach(async(file,index)=>{if(!(fs.statSync(targetDir+"/"+file).isDirectory()&&file=="upload")){awaitfs.remove(targetDir+"/"+file)}})}' index.js | sed -n '193,196p' && cd ../../../../../../../
+# edit & save & preview
+cd frontend/node_modules/@vue/cli-service/lib/commands/build && sed -i '194c if(fs.existsSync(targetDir)){letfiles=[];files=fs.readdirSync(targetDir);files.forEach(async(file,index)=>{if(!(fs.statSync(targetDir+"/"+file).isDirectory()&&file=="upload")){awaitfs.remove(targetDir+"/"+file)}})}' index.js && sed -n '193,196p' index.js && cd ../../../../../../../
+# restore & preview
+cd frontend/node_modules/@vue/cli-service/lib/commands/build && sed -i '194c await fs.remove(targetDir)' index.js && sed -n '193,196p' index.js &&  cd ../../../../../../../
 ```
 then in frontend running `npm run build` won't clear directory `upload`(ie `../backend/.tmp/public/upload` in this project)
 
@@ -120,7 +129,7 @@ docker images
 docker container run -it app:v0.1
 cd backend/config/env
 # 替换253至257行内容，建议先不用-i参数预览文件内容，确认无误后加-i参数保存文件
-sed -i '253,257c onlyAllowOrigins:['http://localhost']' production.js
+sed -i '253,257c onlyAllowOrigins:['http://localhost']' production.js && sed -n '253,257p' production.js && cd ../../../
 # 重新进入容器bash并运行npm start
 # docker ps
 # docker exec -it ${NAMES} /bin/bash

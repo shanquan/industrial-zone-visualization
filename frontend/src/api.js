@@ -61,7 +61,7 @@ export default{
   },
   upload(model,formData) {
     if (model && MODELS.includes(model)) {
-      let promise = axios.post(`upload`, formData, {
+      let promise = axios.post('upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }

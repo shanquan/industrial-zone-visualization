@@ -34,6 +34,7 @@
           name="image"
           :show-file-list="false"
           :on-success="handleImageSuccess"
+          :on-error="uploadFail"
           :before-upload="beforeImageUpload">
           <i class="el-icon-plus"></i>
         </el-upload>
@@ -132,6 +133,9 @@ export default {
       // console.log(res,file) URL.createObjectURL(file.raw)
       this.setBgImg(res.id,res.url);
     },
+    uploadFail(err){
+      this.$message.error(err.toString())
+    },
     beforeImageUpload(file) {
       const isJPG = file.type === 'image/jpeg';
       const isLt10M = file.size / 1024 / 1024 < 10;
@@ -143,11 +147,12 @@ export default {
         this.$message.error('上传头像图片大小不能超过 10MB!');
       }
       if(isJPG && isLt10M)
-      return this.$confirm(`重新上传地区图片后所有厂房区域均需绘制, 是否继续?`, '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        type: 'warning'
-      })
+        return true
+      // return this.$confirm(`重新上传地区图片后所有厂房区域均需绘制, 是否继续?`, '提示', {
+      //   confirmButtonText: '确定',
+      //   cancelButtonText: '取消',
+      //   type: 'warning'
+      // })
       return false;
     }
   }

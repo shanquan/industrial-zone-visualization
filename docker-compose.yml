@@ -8,5 +8,5 @@ services:
     ports:
       - 80:80
     volumes:
-     - ./upload:/backend/.tmp/public/upload
+     - ./data:/backend/.tmp
     command: npm run start
