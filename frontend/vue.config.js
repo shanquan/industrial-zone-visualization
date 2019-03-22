@@ -1,4 +1,4 @@
-process.env.VUE_APP_DEV = "http://localhost:1337"
+process.env.VUE_APP_DEV = "http://10.6.49.71:1337"
 
 module.exports = {
   // publicPath: '/',
@@ -13,7 +13,7 @@ module.exports = {
         pathRewrite: {
           "^/api" : ""
         },
-        cookieDomainRewrite: "localhost:8080"
+        cookieDomainRewrite: "10.6.49.71:8080"
       }
     }
   }

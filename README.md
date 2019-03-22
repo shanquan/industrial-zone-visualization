@@ -22,34 +22,6 @@ $ cd frontend && npm install
 $ cd ../backend && npm install
 ```
 
-##### keep resolve directory `upload` in outputDir
-
-open ./frontend/node_modules/@vue/cli-service/lib/commands/build/index.js, edit & save as below from line 187:
-```js
-  if (args.clean) {
-    if (fs.existsSync(targetDir)) {
-      let files = [];
-      files = fs.readdirSync(targetDir);
-      files.forEach(async (file, index) => {
-        if (!(fs.statSync(targetDir+'/'+file).isDirectory()&&file=='upload')){
-          await fs.remove(targetDir + '/' + file)
-        }
-      })
-    }
-    // await fs.remove(targetDir)
-  }
-```
-or use command:
-```bash
-# preview edit
-cd frontend/node_modules/@vue/cli-service/lib/commands/build && sed '194c if(fs.existsSync(targetDir)){letfiles=[];files=fs.readdirSync(targetDir);files.forEach(async(file,index)=>{if(!(fs.statSync(targetDir+"/"+file).isDirectory()&&file=="upload")){awaitfs.remove(targetDir+"/"+file)}})}' index.js | sed -n '193,196p' && cd ../../../../../../../
-# edit & save & preview
-cd frontend/node_modules/@vue/cli-service/lib/commands/build && sed -i '194c if(fs.existsSync(targetDir)){letfiles=[];files=fs.readdirSync(targetDir);files.forEach(async(file,index)=>{if(!(fs.statSync(targetDir+"/"+file).isDirectory()&&file=="upload")){awaitfs.remove(targetDir+"/"+file)}})}' index.js && sed -n '193,196p' index.js && cd ../../../../../../../
-# restore & preview
-cd frontend/node_modules/@vue/cli-service/lib/commands/build && sed -i '194c await fs.remove(targetDir)' index.js && sed -n '193,196p' index.js &&  cd ../../../../../../../
-```
-then in frontend running `npm run build` won't clear directory `upload`(ie `../backend/.tmp/public/upload` in this project)
-
 ## Usage
 
 ### Development
@@ -122,21 +94,9 @@ sails默认static路径为.tmp/public，上传图片url时需要将图片放入�
 ### docker
 
 ```bash
-## 修改image中的配置文件，修复production环境下sails error
+## 生成镜像
 docker build -t app:v0.1 .
 docker images
-# 运行容器，进入terminal
-docker container run -it app:v0.1
-cd backend/config/env
-# 替换253至257行内容，建议先不用-i参数预览文件内容，确认无误后加-i参数保存文件
-sed -i '253,257c onlyAllowOrigins:['http://localhost']' production.js && sed -n '253,257p' production.js && cd ../../../
-# 重新进入容器bash并运行npm start
-# docker ps
-# docker exec -it ${NAMES} /bin/bash
-# npm run start
-# 提交容器至镜像image
-docker ps
-docker commit ${CONTAINER ID} app:v0.1
 # 运行镜像容器 or 使用docker扩展images下选中app:v0.1右键，选择run interactive
 docker run --rm -it -p 80:80/tcp app:v0.1
 # 开发模式：运行docker-compose.debug.yml

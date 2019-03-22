@@ -41,7 +41,7 @@ module.exports = {
     if(!obj)
       return exits.notFound();
     inputs.image.upload({
-      dirname: require('path').resolve(sails.config.appPath, `.tmp/public/upload/${inputs.model}s`), // custom folder vs default: myApp/.tmp/uploads/
+      // dirname: require('path').resolve(sails.config.appPath, `.tmp/public/upload/${inputs.model}s`), // custom folder vs default: myApp/.tmp/uploads/
       maxBytes: 10000000 //max ~10MB
     },function (err, uploadedFiles) {
       sails.log.info(uploadedFiles);
@@ -49,8 +49,9 @@ module.exports = {
       if (uploadedFiles.length === 0) {
         return exits.error('No file was uploaded');
       }
-      let filePath = uploadedFiles[0].fd.substring(uploadedFiles[0].fd.indexOf('upload'));
-      filePath = '/' + filePath.replace(/\\/g, '\/');
+      // let filePath = uploadedFiles[0].fd.substring(uploadedFiles[0].fd.indexOf('upload'));
+      // filePath = '/' + filePath.replace(/\\/g, '\/');
+      let filePath = '/imgUpload/' + uploadedFiles[0].fd.substr(uploadedFiles[0].fd.indexOf('uploads') + 8, 36);
       Model.update(inputs.id,{
         bgimg: filePath
       }).exec(function (err) {

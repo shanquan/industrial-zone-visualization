@@ -9,6 +9,6 @@ services:
       - 8080:8080
       - 1337:1337
     volumes:
-      - ./data:/backend/.tmp
+      - data:/backend/.tmp
     ## set your startup file here
     command: npm run dev

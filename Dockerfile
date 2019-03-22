@@ -10,9 +10,11 @@ WORKDIR /app
 # Install dependencies
 RUN npm install
 
+# data volume
+VOLUME /backend/.tmp
 # Expose API port to the outside
-# ENV PORT 80
-# EXPOSE 80
+ENV PORT 80
+EXPOSE 80
 
 # Launch application
-# CMD ["npm","start"]
+CMD ["npm","start"]
