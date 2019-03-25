@@ -39,6 +39,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
   'POST /upload': 'upload',
-  'GET /imgUpload/:name': 'image'
+  'GET /imgUpload/:name': {
+    skipAssets: false, // default true, [See ref](https://sailsjs.com/documentation/concepts/routes/custom-routes#?route-target-options)
+    action: 'image'
+  }
 
 };

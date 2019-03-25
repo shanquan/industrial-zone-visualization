@@ -77,8 +77,6 @@ This project could not have been made possible without the great work of [Julian
 
 sails model自动生成的API 与 前端路由重合，所以前端页面统一添加v前缀；（或者配置sails后端API统一增加path: api/, 但是目前只发现重写每个route的办法，不知道如何配置blueprint action自动增加访问路径前缀）
 
-sails默认static路径为.tmp/public，上传图片url时需要将图片放入其中，但是前端执行vue-cli-service build命令时会自动清空public目录或不清空，需要设置[保留其中的upload文件夹](#keep-resolve-directory-in-outputdir)
-
 `area`标签的href链接会触发页面自动刷新，sails后端路由需要针对前端路由页面增加跳转至index.html:
 
 ```js
@@ -88,6 +86,26 @@ sails默认static路径为.tmp/public，上传图片url时需要将图片放入�
   action: 'serve',
   skipAssets: true,
   skipRegex: /^\/api\/.*$/
+}
+```
+
+sails文件默认上传至.tmp/uploads目录，可通过[static middleware](https://www.npmjs.com/package/serve-static)设置uploads目录可公开访问，[See ref](https://sailsjs.com/documentation/concepts/middleware/conventional-defaults)，可参考`${sails.config.appPath}\node_modules\sails\lib\hooks\http\get-configured-http-middleware-fns.js#line54`中的`www`中间件在`sails.config.http`中添加自定义`middleware uploads`:
+```js
+uploads: (function () {
+  var path = require('path');
+  var flatFileMiddleware = require('serve-static')(path.resolve(__dirname, '../.tmp/uploads'), {
+    maxAge: '1h'
+  });
+
+  return flatFileMiddleware;
+})(),
+```
+
+或者添加`action image`和`route`实现显示图片,`sails.config.routes`:
+```js
+'GET /imgUpload/:name': {
+  skipAssets: false, // default true, [See ref](https://sailsjs.com/documentation/concepts/routes/custom-routes#?route-target-options)
+  action: 'image'
 }
 ```
 

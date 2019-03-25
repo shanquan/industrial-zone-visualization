@@ -29,16 +29,17 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
+    order: [
+      'cookieParser',
+      'session',
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'router',
+      'www',
+      'uploads',
+      'favicon',
+    ],
 
 
     /***************************************************************************
@@ -57,7 +58,14 @@ module.exports.http = {
       });
       return middlewareFn;
     })(),
+    uploads: (function () {
+      var path = require('path');
+      var flatFileMiddleware = require('serve-static')(path.resolve(__dirname, '../.tmp/uploads'), {
+        maxAge: '1h'
+      });
 
+      return flatFileMiddleware;
+    })(),
   },
 
 };
