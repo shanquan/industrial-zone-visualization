@@ -10,3 +10,5 @@ services:
     volumes:
      - data:/backend/.tmp
     command: npm run start
+  volumes:
+    data:

@@ -12,3 +12,5 @@ services:
       - data:/backend/.tmp
     ## set your startup file here
     command: npm run dev
+  volumes:
+    data:
