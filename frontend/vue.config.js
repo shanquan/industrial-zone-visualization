@@ -1,4 +1,4 @@
-process.env.VUE_APP_DEV = "http://10.6.49.71:1337"
+process.env.VUE_APP_DEV = "http://10.6.78.90/addressManage" //"http://10.6.49.71:1337"
 
 module.exports = {
   // publicPath: '/',

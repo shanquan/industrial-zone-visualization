@@ -30,9 +30,21 @@ function (error) {
 export default{
   getData(model,id){
     if (model && MODELS.includes(model)){
-      id = id?id:'';
-      let promise = axios.get(`${model}/${id}`);
-      return promise;
+      // id = id?id:'';
+      // let promise = axios.get(`${model}/${id}`);
+      // return promise;
+      let param={
+        MODEL:model
+      }
+      if(id)
+        param.ID = id;
+      let promise = axios.get('BydAddress!getAddressList',{
+        params:{
+          uid: '-1',
+          param: JSON.stringify(param)
+        }
+      })
+      return promise
     }
   },
   queryData(model, params) { // ref: https://sailsjs.com/documentation/reference/blueprint-api/find-where
