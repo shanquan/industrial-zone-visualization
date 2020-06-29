@@ -10,6 +10,16 @@ if (process.env.NODE_ENV == 'development') {
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const MODELS=['zone','building','floor','workshop','profit']
+const mock = false;
+
+if(mock){
+  axios.defaults.baseURL = '/mock/';
+  axios.interceptors.request.use(function (config) {
+    config.url = config.url.replace(/\//g,"_")+ '.json';
+    config.method = 'get';
+    return config;
+  })
+}
 
 axios.interceptors.response.use(function (response) {
   if(response.data.code){
@@ -30,21 +40,21 @@ function (error) {
 export default{
   getData(model,id){
     if (model && MODELS.includes(model)){
-      // id = id?id:'';
-      // let promise = axios.get(`${model}/${id}`);
-      // return promise;
-      let param={
-        MODEL:model
-      }
-      if(id)
-        param.ID = id;
-      let promise = axios.get('BydAddress!getAddressList',{
-        params:{
-          uid: '-1',
-          param: JSON.stringify(param)
-        }
-      })
-      return promise
+      id = id?id:'';
+      let promise = axios.get(`${model}/${id}`);
+      return promise;
+      // let param={
+      //   MODEL:model
+      // }
+      // if(id)
+      //   param.ID = id;
+      // let promise = axios.get('BydAddress!getAddressList',{
+      //   params:{
+      //     uid: '-1',
+      //     param: JSON.stringify(param)
+      //   }
+      // })
+      // return promise
     }
   },
   queryData(model, params) { // ref: https://sailsjs.com/documentation/reference/blueprint-api/find-where

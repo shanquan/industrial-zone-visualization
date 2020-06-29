@@ -39,6 +39,21 @@ First, you have to build up your Vue.js components and merge them with Sails.js.
 $ npm run start
 ```
 
+### role & mock demo
+- normal user: <http://localhost:1337>
+- admin user: <http://localhost:1337?role=0>
+
+change `mock=false` in  `src/api.js` to switch mock service, for mock demo see: <https://devdata-1252923336.cos.ap-guangzhou.myqcloud.com/html/industrialZone/index.html>
+
+### For windows Powershell
+Firstly, Powershell doesn't support "&&". Secondly if you want to set environment variables in windows, you should add `set`. So change `npm run start` and `npm run dev` scripts in package.json:
+```json
+"scripts": {
+    "start": "set NODE_ENV=production && node app.js",
+    "dev": "set NODE_ENV=development && sails lift"
+  }
+```
+
 ## Commands
 
 ### Backend
